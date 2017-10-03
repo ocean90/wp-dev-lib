@@ -516,6 +516,19 @@ function install_tools {
 			fi
 		fi
 	fi
+
+	# Install XML tools.
+	if [ -s "$TEMP_DIRECTORY/paths-scope-xml" ]; then
+
+		# Install xmllint
+		if check_should_execute 'xmllint' && ! command -v xmllint >/dev/null; then
+			echo "Installing xmllint"
+			if ! sudo apt-get install libxml2-utils 2>/dev/null; then
+				echo "Failed to install xmllint, so skipping xmllint"
+				DEV_LIB_SKIP="$DEV_LIB_SKIP,xmllint"
+			fi
+		fi
+	fi
 }
 
 ## Begin functions for phpunit ###########################
